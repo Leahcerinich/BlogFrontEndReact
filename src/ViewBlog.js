@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 
+
 class ViewBlog extends Component {
     constructor(props) {
         super(props);
@@ -12,6 +13,7 @@ class ViewBlog extends Component {
             .then(response => {
                 const convertedArray = response.data.map((elem) => {
                     return {
+                        id: elem._id,
                         key: Date.now(),
                         text: elem.title,
                         body: elem.body,
@@ -24,10 +26,37 @@ class ViewBlog extends Component {
                         items: convertedArray
                     };
                 });
+
             });
 
-
     }
+
+    handleDelete(event, blogid) {
+
+        event.preventDefault();
+
+
+        axios.delete(`http://localhost:8080/blogs/${blogid}`, {
+
+        })
+        const remainingItems = [];
+        for (let i = 0; i < this.state.items.length; i++) {
+            const item = this.state.items[i]
+            if (item.id !== blogid) {
+                remainingItems.push(item)
+            }
+        }
+
+        this.setState(() => {
+            return {
+                items: remainingItems
+            };
+        });
+    }
+
+
+
+
     render() {
         const newArray = [];
         const items = this.state.items
@@ -38,16 +67,17 @@ class ViewBlog extends Component {
                     <h2>{item.text}</h2>
                     <img src={item.image} width="150" height="100" />
                     <p>{item.body}</p>
+                    <div className="btn btn-danger btn-sm" onClick={(e) => this.handleDelete(e, item.id)}> Delete Blog</div>
                 </li>
             )
         }
 
         return (
             <div className="allcontent">
-            <h3>View all content </h3>
-             <ul>{newArray} </ul>
-        
-    </div>
+                <ul>{newArray} </ul>
+
+
+            </div>
 
 
         )
