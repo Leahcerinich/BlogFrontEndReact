@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import { api } from "./api";
 
 
 class ViewBlog extends Component {
@@ -9,8 +9,10 @@ class ViewBlog extends Component {
         this.state = {
             items: []
         };
-        axios.get('http://localhost:8080/blogs')
+        api.get('/blogs')
             .then(response => {
+                console.log('/blogs');
+
                 const convertedArray = response.data.map((elem) => {
                     return {
                         id: elem._id,
@@ -36,7 +38,7 @@ class ViewBlog extends Component {
         event.preventDefault();
 
 
-        axios.delete(`http://localhost:8080/blogs/${blogid}`, {
+        api.delete(`/blogs/${blogid}`, {
 
         })
         const remainingItems = [];
@@ -55,26 +57,28 @@ class ViewBlog extends Component {
     }
 
 
-
-
-    render() {
-        const newArray = [];
+    blogListItems() {
+        const htmlElements = [];
         const items = this.state.items
         for (let i = 0; i < items.length; i++) {
             const item = items[i]
-            newArray.push(
+            htmlElements.push(
                 <li key={i.toString()}>
                     <h2>{item.text}</h2>
-                    <img src={item.image} width="150" height="100" />
+                    <img src={item.image} width="200" height="100" />
                     <p>{item.body}</p>
                     <div className="btn btn-danger btn-sm" onClick={(e) => this.handleDelete(e, item.id)}> Delete Blog</div>
                 </li>
             )
         }
+        return htmlElements;
+    }
 
+    render() {
+     
         return (
             <div className="allcontent">
-                <ul>{newArray} </ul>
+                <ul>{this.blogListItems()} </ul>
 
 
             </div>
