@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { api } from './api';
 
-class CreateBlog extends Component {
+class CreateBlog extends Component { 
     constructor(props) {
         super(props);
 
@@ -49,7 +49,7 @@ class CreateBlog extends Component {
     }
 
     formHandler = (formFields) => {
-        axios.post('http://localhost:8080/blogs', formFields)
+        api.post('/blogs', formFields)
         .then(function(response){
             console.log(response);
         })
@@ -66,6 +66,7 @@ class CreateBlog extends Component {
         return (
             <form className='blog-form' onSubmit={this.handleSubmit}>
                <h3> Submit blog </h3> 
+               
                 <fieldset className='form-group'>
                     <input id='formtext' className='form-input' name='title' type='text'placeholder='title' required onChange={this.textChanged} value={this.state.text} />
                 </fieldset>
@@ -74,12 +75,11 @@ class CreateBlog extends Component {
                     
                     <input id='formimage' className='form-input' name='image' type='url'placeholder='image' required onChange={this.imageChanged} value={this.state.image} />
                 </fieldset>
-
                 <fieldset className='form-group'>
                     
-                    <input id='formbody' className='form-input' name='body' type='text' placeholder='text' required onChange={this.bodyChanged} value={this.state.body} />
+                    <textarea id='formbody' className='form-input' name='body' type='text' placeholder='text' required onChange={this.bodyChanged} value={this.state.body} />
                 </fieldset>
-
+                
                 <div className='form-group'>
                     <input id='formButton' className='btn' type='submit' placeholder='Submit blog' />
                 </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { api } from './api';
 
 class Home extends Component {
     constructor(props) {
@@ -10,17 +10,8 @@ class Home extends Component {
         };
         // using the filter method because I only want to retrieving key, title and image. 
 
-        axios.get('http://localhost:8080/blogs')
+        api.get('/blogs')
             .then(response => {
-                // const newArray = response.data.map((elem) => {
-                //     return {
-                //         key: Date.now(),
-                //         text: elem.title,
-                //     image: elem.body,
-                //         body: elem.image
-                //     };
-                // });
-
                 const newArray = [];
                 for (let i = 0; i < response.data.length; i++) {
 
@@ -31,7 +22,7 @@ class Home extends Component {
 
                     });
                 };
-                //console.log('newArray', newArray);
+                console.log('newArray', newArray);
                 this.setState(() => {
                     return {
                         items: newArray
@@ -39,25 +30,27 @@ class Home extends Component {
                 });
             });
     }
-    render() {
-        const newArray = [];
+    blogListItems() {
+        const blogListItems = [];
         const items = this.state.items
         for (let i = 0; i < items.length; i++) {
             const item = items[i]
-            newArray.push(
+            blogListItems.push(
                 <div className="blog-entry">
-                   <p> {item.text}</p>
+                    <p> {item.text}</p>
                     <img src={item.image} width="100" height="100" />
                 </div>
             )
-
-
         }
-        console.log(`Blogpost=${newArray}`)
+
+        return blogListItems;
+    }
+
+    render() {
+
         return (
             <div className="listofBlogs">
-                    <h3> Click on Blogs to view </h3>
-                <ul> {newArray}
+                <ul> {this.blogListItems()}
                 </ul>
 
             </div>
