@@ -18,6 +18,7 @@ class ViewBlog extends Component {
                         id: elem._id,
                         key: Date.now(),
                         text: elem.title,
+                        author: elem.author,
                         body: elem.body,
                         image: elem.image
                     };
@@ -65,6 +66,7 @@ class ViewBlog extends Component {
             htmlElements.push(
                 <li key={i.toString()}>
                     <h2>{item.text}</h2>
+                    <p> {item.author} </p>
                     <img src={item.image} width="200" height="100" />
                     <p>{item.body}</p>
                     <div className="btn btn-danger btn-sm" onClick={(e) => this.handleDelete(e, item.id)}> Delete Blog</div>
@@ -79,8 +81,6 @@ class ViewBlog extends Component {
         return (
             <div className="allcontent">
                 <ul>{this.blogListItems()} </ul>
-
-
             </div>
 
 

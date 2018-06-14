@@ -7,6 +7,7 @@ class CreateBlog extends Component {
 
         this.state = {
             text: "",
+            author:"",
             image: "",
             body: "",
         }
@@ -20,6 +21,13 @@ class CreateBlog extends Component {
         this.setState({
             text: event.target.value
         }) 
+    }
+
+    authorChanged = (event) => {
+        console.log(`${event.target.name} changed`)
+        this.setState({
+            author: event.target.value
+        })
     }
 
     imageChanged = (event) => {
@@ -43,6 +51,7 @@ class CreateBlog extends Component {
         console.log(`form submitted`)
         this.formHandler({
             title: this.state.text,
+            author: this.state.author,
             image: this.state.image,
             body: this.state.body
         }) 
@@ -71,6 +80,10 @@ class CreateBlog extends Component {
                     <input id='formtext' className='form-input' name='title' type='text'placeholder='title' required onChange={this.textChanged} value={this.state.text} />
                 </fieldset>
 
+                <fieldset className='form-group'>
+                    <input id='formtext' className='form-input' name='author' type='text'placeholder='author' required onChange={this.authorChanged} value={this.state.author} />
+                </fieldset>
+    
                 <fieldset className='form-group'>
                     
                     <input id='formimage' className='form-input' name='image' type='url'placeholder='image' required onChange={this.imageChanged} value={this.state.image} />

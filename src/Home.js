@@ -18,6 +18,7 @@ class Home extends Component {
                     newArray.push({
                         key: Date.now(),
                         text: response.data[i].title,
+                        author: response.data[i].author,
                         image: response.data[i].image
 
                     });
@@ -37,7 +38,8 @@ class Home extends Component {
             const item = items[i]
             blogListItems.push(
                 <div className="blog-entry">
-                    <p> {item.text}</p>
+                    <h4> {item.text}</h4>
+                    <p> {item.author}</p>
                     <img src={item.image} width="100" height="100" />
                 </div>
             )
